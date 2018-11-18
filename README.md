@@ -1,4 +1,4 @@
-- # hadoop
+# hadoop
 ## Getting set up
 - Install VirtualBox 
 - Hortonworks sandbox (15GB! - be careful this is super big) - install version 2.5 otherwise it's going to blow up
@@ -36,3 +36,18 @@
   ```
   hadoop fs -copyFromLocal u.data myFolder
   ```
+
+### Get the env set up again..
+- Will have to start with installing pip, vim, and then mrJob packages
+- Just follow through the video. There is quite a lot gocha
+
+### Run mapreduce srcipt
+- Run on local
+```
+python RatingBreakdown.py u.data
+```
+
+- Run on hadoop cluster
+```
+python RatingsBreakdown.py -r hadoop-streaming-jar /usr/hdp/current/hadoop-mapreduce-client/hadoop-streaming.jar u.data
+```
