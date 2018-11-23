@@ -5,7 +5,7 @@ from pyspark import SparkConf, SparkContext
 # the final results.
 def loadMovieNames():
     movieNames = {}
-    with open("ml-100k/u.item") as f:
+    with open("./ml-100k/u.item") as f:
         for line in f:
             fields = line.split('|')
             movieNames[int(fields[0])] = fields[1]
@@ -27,7 +27,7 @@ if __name__ == "__main__":
     movieNames = loadMovieNames()
 
     # Load up the raw u.data file
-    lines = sc.textFile("hdfs:///user/maria_dev/ml-100k/u.data")
+    lines = sc.textFile("./ml-100k/u.data")
 
     # Convert to (movieID, (rating, 1.0))
     movieRatings = lines.map(parseInput)
