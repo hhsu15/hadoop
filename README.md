@@ -36,6 +36,16 @@
   ```
   hadoop fs -copyFromLocal u.data myFolder
   ```
+## Create Admin login 
+- login as super user
+```
+su root 
+```
+- after enter your password
+
+```
+ambari-admin-password-password-reset
+```
 
 ### Get the env set up again..
 - Will have to start with installing pip, vim, and then mrJob packages
@@ -50,4 +60,44 @@ python RatingBreakdown.py u.data
 - Run on hadoop cluster
 ```
 python RatingsBreakdown.py -r hadoop-streaming-jar /usr/hdp/current/hadoop-mapreduce-client/hadoop-streaming.jar u.data
+```
+
+## MySQL
+- Login as root and enter password "hadoop"
+```
+mysql -u root -p
+```
+- create database
+```
+mysql> create database movielens;
+```
+- show databases
+```
+mysql> show databases;
+```
+- getting set up
+```
+mysql> SET NAMES 'utf8';
+mysql> SET CHARACTER SET utf8;
+```
+
+- now use the database we just created
+```
+mysql>use movielens
+```
+- run the sql file
+```
+mysql>source movielen.sql
+```
+- now the query is executed, let's take a look
+```
+mysql>show tables
+```
+- and the actual data
+```
+mysql>select * from movies limit 10;
+```
+- to see the schema
+```
+mysql> describe ratings
 ```

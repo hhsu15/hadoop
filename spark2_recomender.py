@@ -29,7 +29,7 @@ if __name__ == '__main__':
 	# convert it to a dataframe and cache it
 	ratings = spark.createDataFrame(ratingsRDD).cache()
 
-	# create an ALS collaborative filtering model from the complete data set
+	# create an ALS(Alternating Least Squar) collaborative filtering model from the complete data set
 	als = ALS(maxIter=5, regParam=0.01, userCol='userID', itemCol='movieID',ratingCol='rating')
 	model = als.fit(ratings)
 
@@ -42,10 +42,12 @@ if __name__ == '__main__':
 	print('\nTop 20 recommendations:')
 
 	# find movies rated more than 100 times
-	ratingCount = ratings.rougpBy('movieID').count().filter('count > 100')
+	ratingCount = ratings.gougpBy('movieID').count().filter('count > 100')
 
 	# contruct a test datafrome for user 0 with every movie rated more than 100 times
 	popularMovies = ratingCounts.select('movieID').withColumn('userID', lit(0))
+	
+	# run our model on that list of popular movies for use ID 0. {Essentially to predict the ratings for all the movies for user id 0)
 	recommendations = model.transform(popularMovies)
 
 	topRecommendations = recommendations.sort(recommendations.prediction.desc()).take(20)
