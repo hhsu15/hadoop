@@ -153,5 +153,14 @@ And then enter the following to start server:
 ```
 /usr/hdp/current/hbase-master/bin/hbase-daemon.sh stop rest
 ```
-
+### Pig and HBase working together
+- Log into the HBase shell
+```
+hbse shell
+```
+- Create a table 
+```
+hbase(main):001:0> create 'users', 'userinfo'
+```
+- refer to `/pig/hbase.pig`
 
