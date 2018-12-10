@@ -153,7 +153,7 @@ And then enter the following to start server:
 ```
 /usr/hdp/current/hbase-master/bin/hbase-daemon.sh stop rest
 ```
-### Pig and HBase working together
+#### Pig and HBase working together
 - Log into the HBase shell
 ```
 hbse shell
@@ -163,4 +163,72 @@ hbse shell
 hbase(main):001:0> create 'users', 'userinfo'
 ```
 - refer to `/pig/hbase.pig`
+
+### Cassandra
+Another NoSQL database whcih provides CQL query language to be able to do SQL like queries. Focus more on availability than consistency (--eventually consistent)
+- Set up (TODO)
+- Refer to `CassandraSpark.py` 
+```
+spark-submit --package datastax:spark-cassandra-connector:2.0.0-M2-s 2.11 CassandraSpark.py
+```
+### MongoDB
+Singble master node. Consisteny over availability
+
+Get get up for MongoDB
+- go to the service directory
+```
+[root@sandbox maria_dev]# cd /var/lib/ambari-server/resources/stacks//HDP/2.5/services
+```
+- clone from git
+```
+[root@sandbox services]# git clone https://github.com/nikunjness/mongo-ambari.git
+```
+- restart the service
+```
+[root@sandbox services]# sudo service ambari restart
+```
+- then log into Ambari as admin
+- click on Action -> Add Service -> check Mongo DB
+- once Mongo DB is installed, you need to install python package
+```
+pip install pymongo
+```
+- to run the script, specify the connector version from mongodb:
+```
+export SPARK_MAJOR_VERSION=2
+spark-submit --packages org.mongodb.spark:mongo-spark-connector_2.11:2.0.0 mongodb.py
+```
+#### mongodb command line
+```
+[maria_dev@sandbox ~]$ mongo
+```
+```
+> use movielens
+```
+- the scrips are similar to javascript, to find record by user_id
+```
+> db.users.find( {user_id: 100} )
+```
+- to see exactly what's happening you can use explain
+```
+db.users.explain().find( {user_id:100})
+```
+- since mongodb does not index by default, to make it efficient, we can create the index by running:
+```
+db.users.createIndex( {user_id: 1}) 
+```
+- aggregate by occupation and show average age for each occupation
+```
+> db.users.aggregate([
+... { $group: { _id: {occupation: "$occupation"}, avgAge: { $avg: "$age" }}}
+... ])
+```
+- count of records
+```
+> db.users.count()
+
+- Finally, make sure you shut down MongoDB service correctly otherwise it may crash everything!!
+```
+
+```
 
