@@ -226,9 +226,6 @@ db.users.createIndex( {user_id: 1})
 - count of records
 ```
 > db.users.count()
-
+```
 - Finally, make sure you shut down MongoDB service correctly otherwise it may crash everything!!
-```
-
-```
 
