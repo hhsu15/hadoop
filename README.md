@@ -229,3 +229,73 @@ db.users.createIndex( {user_id: 1})
 ```
 - Finally, make sure you shut down MongoDB service correctly otherwise it may crash everything!!
 
+## Apache Drill
+Makes everthing SQL
+- Example: make query between Hive and MongoDB
+- Start MongoDB and import data into it
+- Go to Hive and create a database by running 
+```
+CREATE DATABASE movielens;
+```
+- Then load data into it (like we did and make sure you select movielens as database)
+
+- Then load the data into MongoDB (make sure you have the file in your HDSF)
+```
+export SPARK_MAJOR_VERSION=2
+spark-submit --packages org.mongodb.spark:mongo-spark-connector_2.11:2.0.0 MongoSpark.py
+```
+- Download Drill
+```
+[root@sandbox maria_dev]# wget http://archive.apache.org/dist/drill/drill-1.12.0/apache-drill-1.12.0.tar.gz
+```
+- Decompress the file
+```
+tar -xvf apache-drill-1.12.0.tar.gz
+- Run drill. cd into the folder 
+```
+[root@sandbox apache-drill-1.12.0]# bin/drillbit.sh start -Ddrill.exec.port=8765
+```
+- TODO (somehow failed to start the web on local..)
+
+## Phoneix
+- Originally developed by SalesForce then open sourced
+- works with HBase
+- TODO
+
+## Presto
+- Built by Facebook
+- works well with Cossandra and others
+
+## Cluster management
+- Yarn - Resouce negotiator
+- Tez - faster than MapReduce
+- Mesos (like Yarn but works more in genereal not just for Hadoop)
+- ZooKeeper
+  - Command line interface
+```
+[root@sandbox ~]# cd /usr/hdp/current/zookeeper-client/bin
+[root@sandbox bin]# ./zkCli.sh # connect to zookeeper
+```
+- once you are in zookeeper, it looks like a filesystem
+- you can run `ls /` to see what's in currect directory
+- let's mess around with it. create a znode(master node) and store string to it. call it testmaster
+```
+[zk: localhost:2181(CONNECTED) 2] create -e /testmaster "127.0.0.1:1234" 
+[zk: localhost:2181(CONNECTED) 4] get /testmaster # get the info about the testmaster
+[zk: localhost:2181(CONNECTED) 4] quit  # to zookeeper this is like the node just died
+[root@sandbox bin]# ./zkCli.sh # connect to zookeeper # log back to zookeeper
+[zk: localhost:2181(CONNECTED) 4] get /testmaster # get the info about the te
+stmaster # this will say the node does not exist
+# so this is the case I will nominate myself as the znode
+[zk: localhost:2181(CONNECTED) 2] create -e /testmaster "127.0.0.1:1234"
+# you won't be able to create one if already exists
+```
+## OOZIE
+- task scheduler in Hadoop
+- you can chain things and create a workflow (like run Pig, Hive and then MongoDB...)
+- written(like configuration) through XML
+
+## Kafka
+- Messaging system
+- Topic based (data published to a topic and you have client listening to the topic)
+- TODO - need hands on practice
