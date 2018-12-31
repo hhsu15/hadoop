@@ -252,7 +252,6 @@ spark-submit --packages org.mongodb.spark:mongo-spark-connector_2.11:2.0.0 Mongo
 ```
 tar -xvf apache-drill-1.12.0.tar.gz
 - Run drill. cd into the folder 
-```
 [root@sandbox apache-drill-1.12.0]# bin/drillbit.sh start -Ddrill.exec.port=8765
 ```
 - TODO (somehow failed to start the web on local..)
@@ -299,9 +298,6 @@ stmaster # this will say the node does not exist
 - A tool to do your data science work in a cluster easily
 - Notebook interface - use 127.0.0.1:9995
 - create a notebook and click on the settings(gear icon) and make sure spark is at the top
-
-
-
 
 ## Kafka
 - Messaging system
