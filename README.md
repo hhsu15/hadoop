@@ -295,7 +295,36 @@ stmaster # this will say the node does not exist
 - you can chain things and create a workflow (like run Pig, Hive and then MongoDB...)
 - written(like configuration) through XML
 
+## Zeppelin
+- A tool to do your data science work in a cluster easily
+- Notebook interface - use 127.0.0.1:9995
+- create a notebook and click on the settings(gear icon) and make sure spark is at the top
+
+
+
+
 ## Kafka
 - Messaging system
 - Topic based (data published to a topic and you have client listening to the topic)
-- TODO - need hands on practice
+
+- let's create a topic
+```
+[maria_dev@sandbox ~]$ cd /usr/hdp/current/kafka-broker/
+# create topic called fred
+[maria_dev@sandbox bin]$ ./kafka-topics.sh --create --zookeeper sandbox.hortonworks.com:2181 --replication-factor 1 --partitions 1 --topic fred
+
+# show all the topics
+[maria_dev@sandbox bin]$ ./kafka-topics.sh --list --zookeeper sandbox.hortonworks.com:2181
+```
+- kick off kafka producer will be wating for consumer
+```
+[maria_dev@sandbox bin]$ ./kafka-console-producer.sh --broker-list sandbox.hotonworks.com:6667 --topic fred
+
+this is a line of data
+I am sending this on the fred topic
+```
+
+- create a consumer(kafka receiver) using another terminal
+```
+[maria_dev@sandbox bin]$ ./kafka-console-consumer.sh --bootstrap-server sandbox.hortonworks.com:6667 --zookeeper localhost:2181 --topic fred--from-beginning
+```
