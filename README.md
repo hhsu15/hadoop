@@ -324,3 +324,20 @@ I am sending this on the fred topic
 ```
 [maria_dev@sandbox bin]$ ./kafka-console-consumer.sh --bootstrap-server sandbox.hortonworks.com:6667 --zookeeper localhost:2181 --topic fred--from-beginning
 ```
+
+## Flume
+- Simliar to Kafka
+- Desinged to aggreate logs, acting as a buffer between log source and the database, say HBase
+- built in hortonworks
+- configuration driven - setting up source, sink and channel
+- refer to the configuration file
+- On the separate terminal run the following to kick off the listener
+```
+[maria_dev@sandbox ~]$ cd /usr/hdp/current/flume-server/
+[maria_dev@sandbox flume-server]$ bin/flume-ng agent --conf conf --conf-file ~/example.conf --name a1 -Dflume.root.logger=INFO,console
+```
+- Then another terminal, run
+```
+[maria_dev@sandbox ~]$ telnet localhost 44444
+# then you can start typing something to test
+```
