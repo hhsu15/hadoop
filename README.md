@@ -341,3 +341,28 @@ I am sending this on the fred topic
 [maria_dev@sandbox ~]$ telnet localhost 44444
 # then you can start typing something to test
 ```
+
+## Streaming Data Processing
+### Spark Streaming
+Use Spark Streming with Flume to process streaming data
+```
+[maria_dev@sandbox ~]mkdir checkpoint # create a checkpoint directory
+[maria_dev@sandbox ~]export SPARK_MAJOR_VERSION=2
+# kick off spark code
+[maria_dev@sandbox ~]spark-submit --packages org.apache.spark:spark-streaming-flume_2.11:2.0.0 SparkFlume.py
+```
+- Kick off Flume in another machine
+```
+[maria_dev@sandbox ~]$ cd /usr/hdp/current/flume-server/
+[maria_dev@sandbox flume-server]$ bin/flume-ng agent --conf conf --conf-file ~/sparkstreamingflume.conf --name a1
+```
+### Storm
+- Truely realtime (as opposed to batch interval like Spark Streaming)
+- Use Java, hardly any other languages
+- Preinstalled in hortonworks
+- Works well with Kafka
+
+## Flink
+- Another streaming processing engine, similar to Storm, true realtime
+- youngest in these technologies
+
